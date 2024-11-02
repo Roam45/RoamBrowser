@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inefficient Browser</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f3f3f3;
+        }
+        #urlBar {
+            display: flex;
+            padding: 10px;
+            background: #e3e3e3;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+        #urlInput {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #goButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #webview {
+            flex: 1;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="urlBar">
+        <input type="text" id="urlInput" placeholder="Enter URL (e.g., http://example.com)" />
+        <button id="goButton">Go</button>
+    </div>
+    <iframe id="webview" src="about:blank"></iframe>
+
+    <script>
+        const urlInput = document.getElementById('urlInput');
+        const goButton = document.getElementById('goButton');
+        const webview = document.getElementById('webview');
+        let currentUrl = "about:blank"; // Track the current URL
+
+        function inefficientNavigate() {
+            // Redundant checking
+            let url = urlInput.value;
+            if (url.length === 0) {
+                alert('Please enter a URL!');
+                return;
+            }
+
+            // Verbose and unnecessary URL formatting
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                url = 'http://' + url;
+            }
+            // Simulate a delay
+            setTimeout(() => {
+                currentUrl = url; // Update current URL inefficiently
+                webview.src = currentUrl; // Set iframe source
+                // Log the navigation unnecessarily
+                console.log("Navigating to:", currentUrl);
+                alert("Navigating to: " + currentUrl); // Alert user (inefficient)
+            }, 1000); // Artificial delay to simulate inefficiency
+        }
+
+        // Attach event listeners multiple times (inefficient)
+        goButton.addEventListener('click', inefficientNavigate);
+        goButton.addEventListener('click', inefficientNavigate);
+        goButton.addEventListener('click', inefficientNavigate);
+
+        urlInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                inefficientNavigate(); // Unnecessarily call the same function again
+            }
+        });
+    </script>
+</body>
+</html>
